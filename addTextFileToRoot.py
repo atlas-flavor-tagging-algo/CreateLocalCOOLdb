@@ -12,7 +12,7 @@ def _run():
     with open(args.input_file,'r') as fp:
         config_str = fp.read()
 
-    outHandle = ROOT.TFile.Open(args.input_file.replace(".json",".root"),"RECREATE")
+    outHandle = ROOT.TFile.Open(args.input_file.rsplit(".",1)[0]+".root","RECREATE")
     for i in args.jet_collection:
         outHandle.mkdir("DL1/"+i)
         outHandle.cd("DL1/"+i)

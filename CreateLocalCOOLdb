@@ -71,7 +71,7 @@ if [[ $# == 2 ]]; then
 	exit 1
     fi
     echo "check for existing GUID in input ROOT calibration file..."
-    NEW_ROOT_FILE=${2%%.}.root
+    NEW_ROOT_FILE=${2%.*}.root
     python $DIR/removeExistingGUID.py $1 2> $OUT_LOG
     echo "building ROOT file from text..."
     python $DIR/addTextFileToRoot.py -v 0 $2 2> $OUT_LOG
@@ -100,8 +100,6 @@ if [[ ! $ATLAS_LOCAL_ASETUP_VERSION ]]; then
     exit 1
 else
     echo "ATLAS environment is already setup in $TestArea"
-    mv $ROOT_DB_FILE $TestArea/$ROOT_DB_FILE
-    cd $TestArea
 fi
 
 # Associate a GUID to this file
