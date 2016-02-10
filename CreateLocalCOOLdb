@@ -40,6 +40,8 @@ This script will:
    the extension replaced with '.root'
  - Call 'hadd' to combine the base ROOT file with the new ROOT
    file. The resulting file will be called $ROOT_DB_FILE.
+ - Remove files from an earlier COOL db setup since they won't
+   get overwritten. This will prevent confusion later in Athena.
  - Set the (new) GUID for this file, and insert the file into the local pool
    file catalogue.
  - Create a local database file and set the appropriate channels.
@@ -101,6 +103,16 @@ if [[ ! $ATLAS_LOCAL_ASETUP_VERSION ]]; then
 else
     echo "ATLAS environment is already setup in $TestArea"
 fi
+
+# Check for earlier local COOL db setup and clean up
+echo "cleaning up earlier COOL db setup..."
+declare -a prev_db_setup=("mycool.db" "PoolFileCatalog.xml"  "PoolFileCatalog.xml.BAK" "coolhist_guid.tmp" "coolhist_tempcat.xml" "coolhist_tempcat.xml.BAK")
+for i in "${prev_db_setup[@]}"
+do
+    if [[ -f "$i" ]]; then
+	rm "$i"
+    fi
+done
 
 # Associate a GUID to this file
 echo "setting file GUID"
