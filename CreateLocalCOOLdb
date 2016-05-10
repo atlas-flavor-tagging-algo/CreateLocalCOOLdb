@@ -114,6 +114,9 @@ do
     fi
 done
 
+# remove GUID (in case it wasn't removed already)
+.${DIR#.}/removeExistingGUID.py $ROOT_DB_FILE 2> $OUT_LOG
+
 # Associate a GUID to this file
 echo "setting file GUID"
 coolHist_setFileIdentifier.sh $ROOT_DB_FILE | grep GUID
